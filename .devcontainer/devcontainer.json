@@ -1,0 +1,13 @@
+{
+  "name": "My Project",
+  "image": "mcr.microsoft.com/devcontainers/java:17",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "Postman.postman-for-vscode",
+        "vmware.vscode-boot-dev-pack"
+      ]
+    }
+  }
+}
