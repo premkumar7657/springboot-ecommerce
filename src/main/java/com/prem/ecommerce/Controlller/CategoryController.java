@@ -1,6 +1,8 @@
 package com.prem.ecommerce.Controlller;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +15,8 @@ import java.util.*;
 
 @RestController
 public class CategoryController {
+
+    
 
     CategoryService categoryService;
 
@@ -30,6 +34,19 @@ public class CategoryController {
     public String addCategory(@RequestBody Category category)
     {
        return categoryService.addCategory(category);
+    }
+
+
+    @DeleteMapping("api/admin/categories/{id}")
+
+    // public String deleteCategory(@PathVariable Long id)
+    // {
+    //     return categoryService.deleteCategory(id);
+    // }
+
+    public String deleteCategory(@PathVariable Long id)
+    {
+        return categoryService.deleteCategory(id);
     }
 
    

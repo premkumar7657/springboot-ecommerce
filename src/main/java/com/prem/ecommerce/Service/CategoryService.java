@@ -10,5 +10,6 @@ public interface CategoryService {
 
     public List<Category> getCategories();
     public String addCategory(Category category);
+    public String deleteCategory(Long id);
 
 }
