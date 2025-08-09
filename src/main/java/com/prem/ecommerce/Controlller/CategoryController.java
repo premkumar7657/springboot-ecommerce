@@ -44,7 +44,7 @@ public class CategoryController {
     {
         try{
             String status = categoryService.deleteCategory(id);
-        return new ResponseEntity<>("Deleted Successfully",HttpStatus.OK);
+        return new ResponseEntity<>(status,HttpStatus.OK);
         }
         catch(ResponseStatusException e)
         {
