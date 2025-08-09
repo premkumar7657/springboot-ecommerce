@@ -1,12 +1,14 @@
 package com.prem.ecommerce.Controlller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.server.ResponseStatusException;
 
 import com.prem.ecommerce.Model.Category;
 import com.prem.ecommerce.Service.CategoryService;
@@ -38,16 +40,22 @@ public class CategoryController {
 
 
     @DeleteMapping("api/admin/categories/{id}")
+    public ResponseEntity<String> deleteCategory(@PathVariable Long id)
+    {
+        try{
+            String status = categoryService.deleteCategory(id);
+        return new ResponseEntity<>("Deleted Successfully",HttpStatus.OK);
+        }
+        catch(ResponseStatusException e)
+        {
+            return new ResponseEntity<>(e.getReason(),e.getStatusCode());
+        }
+    }
 
     // public String deleteCategory(@PathVariable Long id)
     // {
     //     return categoryService.deleteCategory(id);
     // }
-
-    public String deleteCategory(@PathVariable Long id)
-    {
-        return categoryService.deleteCategory(id);
-    }
 
    
 }

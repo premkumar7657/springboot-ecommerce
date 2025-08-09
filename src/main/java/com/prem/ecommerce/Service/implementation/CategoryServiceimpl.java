@@ -2,7 +2,11 @@ package com.prem.ecommerce.Service.implementation;
 
 import java.util.*;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.prem.ecommerce.Model.Category;
 
 import com.prem.ecommerce.Service.CategoryService;
@@ -56,12 +60,7 @@ public class CategoryServiceimpl implements CategoryService{
 
         Category category = categoryData.stream()
         .filter(c-> c.getCategoryId().equals(id))
-        .findFirst().orElseThrow()
-
-        if(category==null)
-        {
-            return "category is not found";
-        }
+        .findFirst().orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Category is not found"));
 
         categoryData.remove(category);
 
