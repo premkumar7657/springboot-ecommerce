@@ -67,4 +67,25 @@ public class CategoryServiceimpl implements CategoryService{
         return "Category deleted successfully for this " + id + " ";
     }
 
+     @Override
+     public Category updateCategory(Long id, Category category) {
+        // TODO Auto-generated method stub
+       Optional<Category> existingOptionalData = categoryData.stream()
+        .filter(c-> c.getCategoryId().equals(id))
+        .findFirst();
+
+        if(existingOptionalData.isPresent())
+        {
+            Category existingData = existingOptionalData.get();
+            existingData.setCategoryName(category.getCategoryName());
+            return existingData;
+        }
+
+        else{
+          throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Category is not found "+ id);
+        }
+
+        
+     }
+
 }
