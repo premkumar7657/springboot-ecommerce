@@ -18,7 +18,7 @@ import com.prem.ecommerce.Service.CategoryService;
 @Service
 public class CategoryServiceimpl implements CategoryService{
 
-    Long id = 1l;
+    //Long id = 1l;
 
     @Autowired
     CategoryRepository categoryRepository;
@@ -64,20 +64,16 @@ public class CategoryServiceimpl implements CategoryService{
 //        Category category = categoryData.stream()
 //        .filter(c-> c.getCategoryId().equals(id))
 //        .findFirst().orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Category is not found"));
-         Optional<Category> category =categoryRepository.findById(id);
-         if(category.isPresent()) {
+         Category category =categoryRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Category is not found"));
              categoryRepository.deleteById(id);
              return "Category deleted successfully for this " + id + " ";
-         }
-         else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category is not found");
          }
 
 
        // categoryData.remove(category);
 
        // return "Category deleted successfully for this " + id + " ";
-    }
+
 
      @Override
      public Category updateCategory(Long id, Category category) {
