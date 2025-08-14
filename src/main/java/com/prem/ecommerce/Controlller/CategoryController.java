@@ -16,6 +16,7 @@ import com.prem.ecommerce.Model.Category;
 import com.prem.ecommerce.Service.CategoryService;
 
 import ch.qos.logback.core.joran.spi.HttpUtil.RequestMethod;
+import jakarta.validation.Valid;
 
 import java.util.*;
 
@@ -38,7 +39,7 @@ public class CategoryController {
     }
 
     @PostMapping("/api/public/category")
-    public ResponseEntity<String> addCategory(@RequestBody Category category)
+    public ResponseEntity<String> addCategory(@Valid @RequestBody Category category) //valid - data ehich we pass must be validated instead giving each variable to validate....also user friendly
     {
         String status = categoryService.addCategory(category);
        return new ResponseEntity<>(status,HttpStatus.CREATED);
