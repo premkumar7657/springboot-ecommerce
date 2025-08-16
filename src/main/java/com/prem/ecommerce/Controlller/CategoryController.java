@@ -23,6 +23,7 @@ import java.util.*;
 @RestController
 public class CategoryController {
 
+    // As we have common RestControllerAdvice are there to handle the exception, We dont need to write the try,catch block for each time.
     
 
     CategoryService categoryService;
@@ -56,14 +57,14 @@ public class CategoryController {
     @DeleteMapping("api/admin/categories/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long id)
     {
-        try{
+        //try{
             String status = categoryService.deleteCategory(id);
         return new ResponseEntity<>(status,HttpStatus.OK);
-        }
-        catch(ResponseStatusException e)
-        {
-            return new ResponseEntity<>(e.getReason(),e.getStatusCode());
-        }
+        // }
+        // catch(ResponseStatusException e)
+        // {
+        //     return new ResponseEntity<>(e.getReason(),e.getStatusCode());
+        // }
     }
 
     // public String deleteCategory(@PathVariable Long id)
@@ -77,15 +78,15 @@ public class CategoryController {
     @PutMapping("api/admin/categories/{id}")
     public ResponseEntity<?> updateCategory(@RequestBody Category category,@PathVariable Long id)
     {
-        try{
+        //try{
                 Category data = categoryService.updateCategory(id,category);
                 return new ResponseEntity<>(data, HttpStatus.OK);
-        }
+        // }
 
-        catch(ResponseStatusException e)
-        {
-            return new ResponseEntity<>(e.getReason(),e.getStatusCode());
-        }
+        // catch(ResponseStatusException e)
+        // {
+        //     return new ResponseEntity<>(e.getReason(),e.getStatusCode());
+        // }
       
       
     }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.prem.ecommerce.ExceptionHandlers.APIException;
+import com.prem.ecommerce.ExceptionHandlers.ResourceNotFoundException;
 import com.prem.ecommerce.Model.Category;
 
 import com.prem.ecommerce.Service.CategoryService;
@@ -28,11 +30,25 @@ public class CategoryServiceimpl implements CategoryService{
     @Override
     public List<Category> getCategories() {
        //return categoryData;
-        return categoryRepository.findAll();
+        //return categoryRepository.findAll();
+
+        List<Category> categories = categoryRepository.findAll();
+        if(categories.isEmpty())
+         throw new APIException("There is no Categories added so far..!");
+
+         return categories;
     }
 
     @Override
     public String addCategory(Category category) {
+
+      // validating any duplicate category name is available or not when we create a category
+
+      Category savedCategory = categoryRepository.findByCategoryName(category.getCategoryName());
+
+      if(savedCategory!=null)
+        throw new APIException("Category with the name " + category.getCategoryName() + " is already exists!!!");
+
         //category.setCategoryId(id++);
         //category.add(category);
         categoryRepository.save(category);
@@ -92,7 +108,8 @@ public class CategoryServiceimpl implements CategoryService{
         }
 
         else{
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Category is not found "+ id);
+          //throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Category is not found "+ id);
+          throw new ResourceNotFoundException("Category","CategoryId",id);
         }
 
         
