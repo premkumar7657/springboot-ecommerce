@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.prem.ecommerce.Model.Category;
+import com.prem.ecommerce.Payload.CategoryDTO;
+import com.prem.ecommerce.Payload.CategoryResponse;
 import com.prem.ecommerce.Service.CategoryService;
 
 import ch.qos.logback.core.joran.spi.HttpUtil.RequestMethod;
@@ -33,17 +35,17 @@ public class CategoryController {
     }
 
     @GetMapping("/api/public/category")
-    public ResponseEntity<List<Category>> getCategories()
+    public ResponseEntity<CategoryResponse> getCategories()
     {
-       List<Category> categories = categoryService.getCategories();
+       CategoryResponse categories = categoryService.getCategories();
        return new ResponseEntity<>(categories,HttpStatus.OK);
     }
 
     @PostMapping("/api/public/category")
-    public ResponseEntity<String> addCategory(@Valid @RequestBody Category category) //valid - data ehich we pass must be validated instead giving each variable to validate....also user friendly
+    public ResponseEntity<CategoryDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDto) //valid - data ehich we pass must be validated instead giving each variable to validate....also user friendly
     {
-        String status = categoryService.addCategory(category);
-       return new ResponseEntity<>(status,HttpStatus.CREATED);
+        CategoryDTO categoryDTO2 = categoryService.addCategory(categoryDto);
+       return new ResponseEntity<>(categoryDTO2,HttpStatus.CREATED);
     }
 
     //  @RequestMapping(value = "/api/public/category" , method = RequestMethod.POST)

@@ -3,6 +3,8 @@ package com.prem.ecommerce.Service.implementation;
 import java.util.*;
 
 import com.prem.ecommerce.Repository.CategoryRepository;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.prem.ecommerce.ExceptionHandlers.APIException;
 import com.prem.ecommerce.ExceptionHandlers.ResourceNotFoundException;
 import com.prem.ecommerce.Model.Category;
-
+import com.prem.ecommerce.Payload.CategoryDTO;
+import com.prem.ecommerce.Payload.CategoryResponse;
 import com.prem.ecommerce.Service.CategoryService;
 
 
@@ -25,10 +28,13 @@ public class CategoryServiceimpl implements CategoryService{
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
   // List<Category> categoryData = new ArrayList<>();
 
     @Override
-    public List<Category> getCategories() {
+    public CategoryResponse getCategories() {
        //return categoryData;
         //return categoryRepository.findAll();
 
@@ -36,23 +42,37 @@ public class CategoryServiceimpl implements CategoryService{
         if(categories.isEmpty())
          throw new APIException("There is no Categories added so far..!");
 
-         return categories;
+        List<CategoryDTO> categoryDTOS = categories.stream()
+                            .map(category-> modelMapper.map(category, CategoryDTO.class))
+                            .toList();
+
+        CategoryResponse categoryResponse = new CategoryResponse();
+
+        categoryResponse.setContent(categoryDTOS);
+
+
+         return categoryResponse;
     }
 
     @Override
-    public String addCategory(Category category) {
+    public CategoryDTO addCategory(CategoryDTO categoryDto) {
+
+      // receiving data as categoryDTO
+
+      Category category = modelMapper.map(categoryDto,Category.class);
+
 
       // validating any duplicate category name is available or not when we create a category
 
-      Category savedCategory = categoryRepository.findByCategoryName(category.getCategoryName());
+      Category savedCategoryFromDB = categoryRepository.findByCategoryName(category.getCategoryName());
 
-      if(savedCategory!=null)
+      if(savedCategoryFromDB!=null)
         throw new APIException("Category with the name " + category.getCategoryName() + " is already exists!!!");
 
         //category.setCategoryId(id++);
         //category.add(category);
-        categoryRepository.save(category);
-        return "added successfully";
+        Category savedCategory = categoryRepository.save(category);
+        return modelMapper.map(savedCategory,CategoryDTO.class);
         
     }
 
