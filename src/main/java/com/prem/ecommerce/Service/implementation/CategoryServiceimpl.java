@@ -6,6 +6,9 @@ import com.prem.ecommerce.Repository.CategoryRepository;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException.NotFound;
@@ -33,12 +36,21 @@ public class CategoryServiceimpl implements CategoryService{
 
   // List<Category> categoryData = new ArrayList<>();
 
+  
+
     @Override
-    public CategoryResponse getCategories() {
+    public CategoryResponse getCategories(Integer pageSize, Integer pageNumber) {
        //return categoryData;
         //return categoryRepository.findAll();
+      Pageable pageDetails = PageRequest.of(pageNumber,pageSize);
+      Page<Category> pageCategories = categoryRepository.findAll(pageDetails);
+      List<Category> categories = pageCategories.getContent();
 
-        List<Category> categories = categoryRepository.findAll();
+      //List<Category> categories = categoryRepository.findAll();
+
+
+
+        //List<Category> categories = categoryRepository.findAll();
         if(categories.isEmpty())
          throw new APIException("There is no Categories added so far..!");
 

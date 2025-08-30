@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -30,14 +31,27 @@ public class CategoryController {
 
     CategoryService categoryService;
 
+
+
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
+
+    // @GetMapping("api/public/getvaluefromurl")
+    // public ResponseEntity<String> getValueFromURL(@RequestParam(name = "message")String message)
+    // {
+    //     return new ResponseEntity<>(message,HttpStatus.OK);
+    // }
+
+
     @GetMapping("/api/public/category")
-    public ResponseEntity<CategoryResponse> getCategories()
+    public ResponseEntity<CategoryResponse> getCategories(
+        @RequestParam(name = "pageSize")Integer pageSize,
+        @RequestParam(name = "pageNumber")Integer pageNumber)
     {
-       CategoryResponse categories = categoryService.getCategories();
+
+       CategoryResponse categories = categoryService.getCategories(pageSize,pageNumber);
        return new ResponseEntity<>(categories,HttpStatus.OK);
     }
 

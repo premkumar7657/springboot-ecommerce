@@ -10,7 +10,7 @@ import com.prem.ecommerce.Payload.CategoryResponse;
 public interface CategoryService {
     
 
-    public CategoryResponse getCategories();
+    public CategoryResponse getCategories(Integer pageSize, Integer pageNumber);
     public CategoryDTO addCategory(CategoryDTO categoryDto);
     public CategoryDTO deleteCategory(Long id);
     public CategoryDTO updateCategory(Long id, CategoryDTO categoryDto);

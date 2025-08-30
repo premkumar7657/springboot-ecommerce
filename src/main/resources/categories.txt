@@ -1,0 +1,144 @@
+[
+  {
+    "categoryName": "Electronics"
+  },
+  {
+    "categoryName": "Home & Kitchen"
+  },
+  {
+    "categoryName": "Clothing"
+  },
+  {
+    "categoryName": "Books"
+  },
+  {
+    "categoryName": "Beauty & Personal Care"
+  },
+  {
+    "categoryName": "Toys & Games"
+  },
+  {
+    "categoryName": "Sports & Outdoors"
+  },
+  {
+    "categoryName": "Health & Household"
+  },
+  {
+    "categoryName": "Automotive"
+  },
+  {
+    "categoryName": "Pet Supplies"
+  },
+  {
+    "categoryName": "Movies & TV"
+  },
+  {
+    "categoryName": "Baby Products"
+  },
+  {
+    "categoryName": "Garden & Outdoor"
+  },
+  {
+    "categoryName": "Tools & Home Improvement"
+  },
+  {
+    "categoryName": "Office Products"
+  },
+  {
+    "categoryName": "Groceries"
+  },
+  {
+    "categoryName": "Handmade"
+  },
+  {
+    "categoryName": "Arts, Crafts & Sewing"
+  },
+  {
+    "categoryName": "Cell Phones & Accessories"
+  },
+  {
+    "categoryName": "Computers & Accessories"
+  },
+  {
+    "categoryName": "Video Games"
+  },
+  {
+    "categoryName": "Industrial & Scientific"
+  },
+  {
+    "categoryName": "Collectibles & Fine Art"
+  },
+  {
+    "categoryName": "Musical Instruments"
+  },
+  {
+    "categoryName": "Luggage & Travel Gear"
+  },
+  {
+    "categoryName": "Appliances"
+  },
+  {
+    "categoryName": "Jewelry"
+  },
+  {
+    "categoryName": "Watches"
+  },
+  {
+    "categoryName": "Shoes"
+  },
+  {
+    "categoryName": "Furniture"
+  },
+  {
+    "categoryName": "Smart Home"
+  },
+  {
+    "categoryName": "Fitness & Nutrition"
+  },
+  {
+    "categoryName": "Food & Beverages"
+  },
+  {
+    "categoryName": "Photography"
+  },
+  {
+    "categoryName": "Drones & Accessories"
+  }
+]
+
+
+INSERT INTO categories (category_id, category_name) VALUES (1, 'Electronics');
+INSERT INTO categories (category_id, category_name) VALUES (2, 'Home & Kitchen');
+INSERT INTO categories (category_id, category_name) VALUES (3, 'Clothing');
+INSERT INTO categories (category_id, category_name) VALUES (4, 'Books');
+INSERT INTO categories (category_id, category_name) VALUES (5, 'Beauty & Personal Care');
+INSERT INTO categories (category_id, category_name) VALUES (6, 'Toys & Games');
+INSERT INTO categories (category_id, category_name) VALUES (7, 'Sports & Outdoors');
+INSERT INTO categories (category_id, category_name) VALUES (8, 'Health & Household');
+INSERT INTO categories (category_id, category_name) VALUES (9, 'Automotive');
+INSERT INTO categories (category_id, category_name) VALUES (10, 'Pet Supplies');
+INSERT INTO categories (category_id, category_name) VALUES (11, 'Movies & TV');
+INSERT INTO categories (category_id, category_name) VALUES (12, 'Baby Products');
+INSERT INTO categories (category_id, category_name) VALUES (13, 'Garden & Outdoor');
+INSERT INTO categories (category_id, category_name) VALUES (14, 'Tools & Home Improvement');
+INSERT INTO categories (category_id, category_name) VALUES (15, 'Office Products');
+INSERT INTO categories (category_id, category_name) VALUES (16, 'Groceries');
+INSERT INTO categories (category_id, category_name) VALUES (17, 'Handmade');
+INSERT INTO categories (category_id, category_name) VALUES (18, 'Arts, Crafts & Sewing');
+INSERT INTO categories (category_id, category_name) VALUES (19, 'Cell Phones & Accessories');
+INSERT INTO categories (category_id, category_name) VALUES (20, 'Computers & Accessories');
+INSERT INTO categories (category_id, category_name) VALUES (21, 'Video Games');
+INSERT INTO categories (category_id, category_name) VALUES (22, 'Industrial & Scientific');
+INSERT INTO categories (category_id, category_name) VALUES (23, 'Collectibles & Fine Art');
+INSERT INTO categories (category_id, category_name) VALUES (24, 'Musical Instruments');
+INSERT INTO categories (category_id, category_name) VALUES (25, 'Luggage & Travel Gear');
+INSERT INTO categories (category_id, category_name) VALUES (26, 'Appliances');
+INSERT INTO categories (category_id, category_name) VALUES (27, 'Jewelry');
+INSERT INTO categories (category_id, category_name) VALUES (28, 'Watches');
+INSERT INTO categories (category_id, category_name) VALUES (29, 'Shoes');
+INSERT INTO categories (category_id, category_name) VALUES (30, 'Furniture');
+INSERT INTO categories (category_id, category_name) VALUES (31, 'Smart Home');
+INSERT INTO categories (category_id, category_name) VALUES (32, 'Fitness & Nutrition');
+INSERT INTO categories (category_id, category_name) VALUES (33, 'Food & Beverages');
+INSERT INTO categories (category_id, category_name) VALUES (34, 'Photography');
+INSERT INTO categories (category_id, category_name) VALUES (35, 'Drones & Accessories');
