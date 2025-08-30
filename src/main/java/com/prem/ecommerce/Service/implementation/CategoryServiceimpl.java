@@ -95,14 +95,17 @@ public class CategoryServiceimpl implements CategoryService{
 
 
      @Override
-    public String deleteCategory(Long id) {
+    public CategoryDTO deleteCategory(Long id) {
 
 //        Category category = categoryData.stream()
 //        .filter(c-> c.getCategoryId().equals(id))
 //        .findFirst().orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Category is not found"));
          Category category =categoryRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Category is not found"));
-             categoryRepository.deleteById(id);
-             return "Category deleted successfully for this " + id + " ";
+         Optional<Category> response = categoryRepository.findById(id);
+              categoryRepository.deleteById(id);
+             //return "Category deleted successfully for this " + id + " ";
+             
+             return modelMapper.map(response, CategoryDTO.class);
          }
 
 
@@ -112,11 +115,13 @@ public class CategoryServiceimpl implements CategoryService{
 
 
      @Override
-     public Category updateCategory(Long id, Category category) {
+     public CategoryDTO updateCategory(Long id, CategoryDTO categoryDto) {
         // TODO Auto-generated method stub
 //       Optional<Category> existingOptionalData = categoryData.stream()
 //        .filter(c-> c.getCategoryId().equals(id))
 //        .findFirst();
+
+        Category category = modelMapper.map(categoryDto, Category.class);
          Optional<Category> existingOptionalData = categoryRepository.findById(id);
 
         if(existingOptionalData.isPresent())
@@ -124,7 +129,7 @@ public class CategoryServiceimpl implements CategoryService{
             Category existingData = existingOptionalData.get();
             existingData.setCategoryName(category.getCategoryName());
             Category savedcategory = categoryRepository.save(existingData);
-            return savedcategory;
+            return modelMapper.map(savedcategory,CategoryDTO.class);
         }
 
         else{

@@ -57,10 +57,10 @@ public class CategoryController {
 
 
     @DeleteMapping("api/admin/categories/{id}")
-    public ResponseEntity<String> deleteCategory(@PathVariable Long id)
+    public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable Long id)
     {
         //try{
-            String status = categoryService.deleteCategory(id);
+            CategoryDTO status = categoryService.deleteCategory(id);
         return new ResponseEntity<>(status,HttpStatus.OK);
         // }
         // catch(ResponseStatusException e)
@@ -78,11 +78,11 @@ public class CategoryController {
 
 
     @PutMapping("api/admin/categories/{id}")
-    public ResponseEntity<?> updateCategory(@RequestBody Category category,@PathVariable Long id)
+    public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDto,@PathVariable Long id)
     {
         //try{
-                Category data = categoryService.updateCategory(id,category);
-                return new ResponseEntity<>(data, HttpStatus.OK);
+                CategoryDTO data = categoryService.updateCategory(id,categoryDto);
+                return new ResponseEntity<CategoryDTO>(data, HttpStatus.OK);
         // }
 
         // catch(ResponseStatusException e)

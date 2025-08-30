@@ -12,7 +12,7 @@ public interface CategoryService {
 
     public CategoryResponse getCategories();
     public CategoryDTO addCategory(CategoryDTO categoryDto);
-    public String deleteCategory(Long id);
-    public Category updateCategory(Long id, Category category);
+    public CategoryDTO deleteCategory(Long id);
+    public CategoryDTO updateCategory(Long id, CategoryDTO categoryDto);
 
 }
