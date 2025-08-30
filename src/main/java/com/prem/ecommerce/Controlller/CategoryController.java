@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.prem.ecommerce.Config.AppConstants;
 import com.prem.ecommerce.Model.Category;
 import com.prem.ecommerce.Payload.CategoryDTO;
 import com.prem.ecommerce.Payload.CategoryResponse;
@@ -47,8 +48,8 @@ public class CategoryController {
 
     @GetMapping("/api/public/category")
     public ResponseEntity<CategoryResponse> getCategories(
-        @RequestParam(name = "pageSize")Integer pageSize,
-        @RequestParam(name = "pageNumber")Integer pageNumber)
+        @RequestParam(name = "pageSize",defaultValue =AppConstants.PAGE_SIZE, required = false)Integer pageSize,
+        @RequestParam(name = "pageNumber",defaultValue =AppConstants.PAGE_NUMBER ,required = false)Integer pageNumber)
     {
 
        CategoryResponse categories = categoryService.getCategories(pageSize,pageNumber);
