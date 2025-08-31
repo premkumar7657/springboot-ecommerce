@@ -48,16 +48,18 @@ public class CategoryController {
 
     @GetMapping("/api/public/category")
     public ResponseEntity<CategoryResponse> getCategories(
-        @RequestParam(name = "pageSize",defaultValue =AppConstants.PAGE_SIZE, required = false)Integer pageSize,
-        @RequestParam(name = "pageNumber",defaultValue =AppConstants.PAGE_NUMBER ,required = false)Integer pageNumber)
+        @RequestParam(name = "pageSize",defaultValue = AppConstants.PAGE_SIZE, required = false)Integer pageSize,
+        @RequestParam(name = "pageNumber",defaultValue = AppConstants.PAGE_NUMBER ,required = false)Integer pageNumber,
+        @RequestParam(name = "sortBy",defaultValue = AppConstants.SORT_BY ,required = false) String sortBy,
+        @RequestParam(name = "sortOrder",defaultValue = AppConstants.SORT_ORDER ,required = false) String sortOrder)
     {
 
-       CategoryResponse categories = categoryService.getCategories(pageSize,pageNumber);
+       CategoryResponse categories = categoryService.getCategories(pageSize,pageNumber,sortBy,sortOrder);
        return new ResponseEntity<>(categories,HttpStatus.OK);
     }
 
     @PostMapping("/api/public/category")
-    public ResponseEntity<CategoryDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDto) //valid - data ehich we pass must be validated instead giving each variable to validate....also user friendly
+    public ResponseEntity<CategoryDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDto) //valid - data which we pass must be validated instead giving each variable to validate....also user friendly
     {
         CategoryDTO categoryDTO2 = categoryService.addCategory(categoryDto);
        return new ResponseEntity<>(categoryDTO2,HttpStatus.CREATED);

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException.NotFound;
@@ -39,10 +40,13 @@ public class CategoryServiceimpl implements CategoryService{
   
 
     @Override
-    public CategoryResponse getCategories(Integer pageSize, Integer pageNumber) {
+    public CategoryResponse getCategories(Integer pageSize, Integer pageNumber,String sortBy,String sortOrder) {
        //return categoryData;
         //return categoryRepository.findAll();
-      Pageable pageDetails = PageRequest.of(pageNumber,pageSize);
+     Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending() ;
+
+
+      Pageable pageDetails = PageRequest.of(pageNumber,pageSize,sortByAndOrder);
       Page<Category> pageCategories = categoryRepository.findAll(pageDetails);
       List<Category> categories = pageCategories.getContent();
 
@@ -117,7 +121,7 @@ public class CategoryServiceimpl implements CategoryService{
 //        Category category = categoryData.stream()
 //        .filter(c-> c.getCategoryId().equals(id))
 //        .findFirst().orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Category is not found"));
-         Category category =categoryRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Category is not found"));
+         Category category =categoryRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("category", "categoryId", id));
          Optional<Category> response = categoryRepository.findById(id);
               categoryRepository.deleteById(id);
              //return "Category deleted successfully for this " + id + " ";
