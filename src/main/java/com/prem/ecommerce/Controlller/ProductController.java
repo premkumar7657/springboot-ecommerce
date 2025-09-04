@@ -45,4 +45,12 @@ public class ProductController {
     }
 
 
+    @GetMapping("public/products/keyword/{keyWord}")
+    ResponseEntity<ProductResponse> getAllProductsByKeyword(@PathVariable String keyWord)
+    {
+         ProductResponse productResponse = productService.getAllProductsByKeyword(keyWord);
+        return new ResponseEntity<>(productResponse,HttpStatus.OK);
+    }
+
+
 }

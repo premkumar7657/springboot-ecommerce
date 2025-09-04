@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.endpoint.Producible;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.prem.ecommerce.ExceptionHandlers.ResourceNotFoundException;
 import com.prem.ecommerce.Model.Category;
@@ -83,6 +84,30 @@ public class ProductServiceImpl implements ProductService{
 
     return productResponse;
         
+
+    }
+
+
+    @Override
+    public ProductResponse getAllProductsByKeyword(String keyWord) {
+        // List<Product> products = productRepository.findAll();  //findByProductNameLikeIgnoreCase('%' + keyWord + '%')
+
+        // List<ProductDTO> filteredProducts  = products.stream()
+        // .filter(product -> product.getProductName().contains(keyWord))
+        // .map(product -> modelMapper.map(product, ProductDTO.class))
+        // .toList();
+
+       List<Product> products = productRepository.findByProductNameLikeIgnoreCase('%' + keyWord + '%');
+
+        List<ProductDTO> filteredProducts  = products.stream()
+        .map(product -> modelMapper.map(product, ProductDTO.class))
+        .toList();
+
+
+        ProductResponse productResponse = new ProductResponse();
+    productResponse.setContent(filteredProducts);
+
+    return productResponse;
 
     }
 

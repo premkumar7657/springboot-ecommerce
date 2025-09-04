@@ -13,5 +13,7 @@ public interface ProductService {
 
     public ProductResponse getAllProductsByCategory(Long categoryId);
 
+    public ProductResponse getAllProductsByKeyword(String keyWord);
+
 
 }
