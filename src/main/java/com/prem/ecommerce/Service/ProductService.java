@@ -15,5 +15,7 @@ public interface ProductService {
 
     public ProductResponse getAllProductsByKeyword(String keyWord);
 
+    public ProductDTO updateProduct(Long productId, ProductDTO productDto);
+
 
 }
