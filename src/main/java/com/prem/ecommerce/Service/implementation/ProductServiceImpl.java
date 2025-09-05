@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.endpoint.Producible;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,9 @@ import com.prem.ecommerce.Payload.ProductDTO;
 import com.prem.ecommerce.Payload.ProductResponse;
 import com.prem.ecommerce.Repository.CategoryRepository;
 import com.prem.ecommerce.Repository.ProductRepository;
+import com.prem.ecommerce.Service.FileService;
 import com.prem.ecommerce.Service.ProductService;
+
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -36,6 +39,12 @@ public class ProductServiceImpl implements ProductService{
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private FileService fileService;
+
+    @Value("${project.image}")
+    private String path;
 
 
     public ProductDTO addProduct(ProductDTO productDto, Long categoryId) {
@@ -167,8 +176,8 @@ public class ProductServiceImpl implements ProductService{
         .orElseThrow(()-> new ResourceNotFoundException("product","productID",productId));
 
         //get the file name from the image and upload it in the project image path or server
-        String path = "images/";
-        String fileName = uploadImage(path, image);
+        //String path = "images/"; move this property to application.properties
+        String fileName = fileService.uploadImage(path, image);
 
         //updating the file name to the product
         product.setImage(fileName);
@@ -181,38 +190,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
 
-    private String uploadImage(String path, MultipartFile image) throws IOException {
-        
-        // file names of current file or original file
-        String originalName = image.getOriginalFilename();
-
-        // generate a unique file name to avoid the overridden using UID
-        String randomId = UUID.randomUUID().toString();
-
-        //originalfilename animal.png --> 1dksjdhskd1213k313j.png
-        String newFileName = randomId.concat(originalName.substring(originalName.lastIndexOf('.')));
-
-        //creating original path
-        String fileAbsPath = path + File.separator + newFileName;  // File.seperator = "/"
-
-        //Check if the path is exist or create a new folder
-
-        File folder = new File(path);
-        if(!folder.exists())
-        folder.mkdir();
-
-        Files.copy(image.getInputStream(),Paths.get(fileAbsPath));
-
-        return newFileName;
-
-        
-
-
-
-        //upload to the server 
-
-        //returning file name
-    }
+    
 
     
 
