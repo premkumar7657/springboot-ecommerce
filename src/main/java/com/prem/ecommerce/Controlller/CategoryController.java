@@ -50,7 +50,7 @@ public class CategoryController {
     public ResponseEntity<CategoryResponse> getCategories(
         @RequestParam(name = "pageSize",defaultValue = AppConstants.PAGE_SIZE, required = false)Integer pageSize,
         @RequestParam(name = "pageNumber",defaultValue = AppConstants.PAGE_NUMBER ,required = false)Integer pageNumber,
-        @RequestParam(name = "sortBy",defaultValue = AppConstants.SORT_BY ,required = false) String sortBy,
+        @RequestParam(name = "sortBy",defaultValue = AppConstants.SORT_BY_CATEGORY ,required = false) String sortBy,
         @RequestParam(name = "sortOrder",defaultValue = AppConstants.SORT_ORDER ,required = false) String sortOrder)
     {
 

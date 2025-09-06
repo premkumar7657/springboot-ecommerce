@@ -48,11 +48,7 @@ public class CategoryServiceimpl implements CategoryService{
 
       Pageable pageDetails = PageRequest.of(pageNumber,pageSize,sortByAndOrder);
       Page<Category> pageCategories = categoryRepository.findAll(pageDetails);
-      List<Category> categories = pageCategories.getContent();
-
-      //List<Category> categories = categoryRepository.findAll();
-
-
+      List<Category> categories = pageCategories.getContent();  //getContent-->Page interface method 
 
         //List<Category> categories = categoryRepository.findAll();
         if(categories.isEmpty())
@@ -65,6 +61,8 @@ public class CategoryServiceimpl implements CategoryService{
         CategoryResponse categoryResponse = new CategoryResponse();
 
         categoryResponse.setContent(categoryDTOS);
+
+        //sending page details also
         categoryResponse.setPageNumber(pageCategories.getNumber());
         categoryResponse.setPageSize(pageCategories.getSize());
         categoryResponse.setTotalElements(pageCategories.getTotalElements());
