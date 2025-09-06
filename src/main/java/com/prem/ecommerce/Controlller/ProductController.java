@@ -51,17 +51,25 @@ public class ProductController {
 
      @GetMapping("/public/categories/{categoryId}/products")
 
-    ResponseEntity<ProductResponse> getAllProductsByCategory(@PathVariable Long categoryId)
+    ResponseEntity<ProductResponse> getAllProductsByCategory(@PathVariable Long categoryId,
+    @RequestParam(name = "pageSize",defaultValue = AppConstants.PAGE_SIZE, required = false)Integer pageSize,
+        @RequestParam(name = "pageNumber",defaultValue = AppConstants.PAGE_NUMBER ,required = false)Integer pageNumber,
+        @RequestParam(name = "sortBy",defaultValue = AppConstants.SORT_BY_PRODUCT ,required = false) String sortBy,
+        @RequestParam(name = "sortOrder",defaultValue = AppConstants.SORT_ORDER ,required = false) String sortOrder)
     {
-         ProductResponse productResponse = productService.getAllProductsByCategory(categoryId);
+         ProductResponse productResponse = productService.getAllProductsByCategory(categoryId,pageSize,pageNumber,sortBy,sortOrder);
         return new ResponseEntity<>(productResponse,HttpStatus.OK);
     }
 
 
     @GetMapping("public/products/keyword/{keyWord}")
-    ResponseEntity<ProductResponse> getAllProductsByKeyword(@PathVariable String keyWord)
+    ResponseEntity<ProductResponse> getAllProductsByKeyword(@PathVariable String keyWord,
+    @RequestParam(name = "pageSize",defaultValue = AppConstants.PAGE_SIZE, required = false)Integer pageSize,
+        @RequestParam(name = "pageNumber",defaultValue = AppConstants.PAGE_NUMBER ,required = false)Integer pageNumber,
+        @RequestParam(name = "sortBy",defaultValue = AppConstants.SORT_BY_PRODUCT ,required = false) String sortBy,
+        @RequestParam(name = "sortOrder",defaultValue = AppConstants.SORT_ORDER ,required = false) String sortOrder)
     {
-         ProductResponse productResponse = productService.getAllProductsByKeyword(keyWord);
+         ProductResponse productResponse = productService.getAllProductsByKeyword(keyWord,pageSize,pageNumber,sortBy,sortOrder);
         return new ResponseEntity<>(productResponse,HttpStatus.OK);
     }
 

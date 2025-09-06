@@ -126,11 +126,20 @@ public class ProductServiceImpl implements ProductService{
 
 
     @Override
-    public ProductResponse getAllProductsByCategory(Long categoryId) {
+    public ProductResponse getAllProductsByCategory(Long categoryId,Integer pageSize,Integer pageNumber,String sortBy,String sortOrder) {
+
         Category category = categoryRepository.findById(categoryId)
         .orElseThrow(()-> new ResourceNotFoundException("category","categoryId",categoryId));
 
-        List<Product> products = productRepository.findByCategoryOrderByPriceAsc(category);
+        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNumber, pageSize,sortByAndOrder);
+        Page<Product> pageProduct = productRepository.findByCategoryOrderByPriceAsc(category,pageable);  //SELECT * FROM products WHERE category_id = [categoryId] ORDER BY [sortBy] [sortOrder] LIMIT [pageSize] OFFSET [pageNumber * pageSize]
+        List<Product> products = pageProduct.getContent();
+
+
+        //SELECT * FROM product WHERE category_id = ? ORDER BY price ASC LIMIT ? OFFSET ?;
+
+        //List<Product> products = productRepository.findByCategoryOrderByPriceAsc(category);
 
         // Map the products to DTOs as a separate step.
     List<ProductDTO> productDTOs = products.stream()
@@ -140,6 +149,13 @@ public class ProductServiceImpl implements ProductService{
     // Create and populate the response object.
     ProductResponse productResponse = new ProductResponse();
     productResponse.setContent(productDTOs);
+      
+        productResponse.setPageNumber(pageProduct.getNumber());
+        productResponse.setPageSize(pageProduct.getSize());
+        productResponse.setTotalElements(pageProduct.getTotalElements());
+        productResponse.setTotalPages(pageProduct.getTotalPages());
+        productResponse.setLastPage(pageProduct.isLast());
+
 
     return productResponse;
         
@@ -148,7 +164,7 @@ public class ProductServiceImpl implements ProductService{
 
 
     @Override
-    public ProductResponse getAllProductsByKeyword(String keyWord) {
+    public ProductResponse getAllProductsByKeyword(String keyWord,Integer pageSize,Integer pageNumber,String sortBy,String sortOrder) {
         // List<Product> products = productRepository.findAll();  //findByProductNameLikeIgnoreCase('%' + keyWord + '%')
 
         // List<ProductDTO> filteredProducts  = products.stream()
@@ -156,7 +172,14 @@ public class ProductServiceImpl implements ProductService{
         // .map(product -> modelMapper.map(product, ProductDTO.class))
         // .toList();
 
-       List<Product> products = productRepository.findByProductNameLikeIgnoreCase('%' + keyWord + '%');
+
+         Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNumber, pageSize,sortByAndOrder);
+        Page<Product> pageProduct = productRepository.findByProductNameLikeIgnoreCase('%' + keyWord + '%',pageable);
+        List<Product> products = pageProduct.getContent();
+
+
+        //List<Product> products = productRepository.findByProductNameLikeIgnoreCase('%' + keyWord + '%');
 
         List<ProductDTO> filteredProducts  = products.stream()
         .map(product -> modelMapper.map(product, ProductDTO.class))
@@ -165,6 +188,14 @@ public class ProductServiceImpl implements ProductService{
 
         ProductResponse productResponse = new ProductResponse();
     productResponse.setContent(filteredProducts);
+
+
+    productResponse.setPageNumber(pageProduct.getNumber());
+        productResponse.setPageSize(pageProduct.getSize());
+        productResponse.setTotalElements(pageProduct.getTotalElements());
+        productResponse.setTotalPages(pageProduct.getTotalPages());
+        productResponse.setLastPage(pageProduct.isLast());
+
 
     return productResponse;
 
