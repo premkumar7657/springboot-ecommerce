@@ -22,6 +22,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -35,6 +36,7 @@ public class Roles {
    @Column(name = "role_id")
    private Long roleId;
 
+   @ToString.Exclude
    @Enumerated(EnumType.STRING)
    @Column(name = "role_name", length = 20)
    private AppRole roleName;
@@ -46,9 +48,9 @@ public class Roles {
    @JoinTable( name = "user_role",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id")
-
-   )
-   private Set<Roles> roles = new HashSet<>();
+   ) 
+   @ToString.Exclude
+   private Set<User> roles = new HashSet<>();
 
     
 
