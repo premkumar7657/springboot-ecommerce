@@ -41,16 +41,7 @@ public class Roles {
    @Column(name = "role_name", length = 20)
    private AppRole roleName;
 
-   @Getter
-   @Setter
-   @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST},
-               fetch = FetchType.EAGER)
-   @JoinTable( name = "user_role",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id")
-   ) 
-   @ToString.Exclude
-   private Set<User> roles = new HashSet<>();
+  
 
     
 
