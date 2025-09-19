@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ import lombok.ToString;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Roles {
 
@@ -35,6 +37,10 @@ public class Roles {
 
    @Column(name = "role_id")
    private Long roleId;
+
+   public Roles(AppRole roleName) {
+      this.roleName = roleName;
+   }
 
    @ToString.Exclude
    @Enumerated(EnumType.STRING)
