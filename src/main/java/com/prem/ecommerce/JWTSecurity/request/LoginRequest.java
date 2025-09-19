@@ -1,9 +1,14 @@
-package com.prem.ecommerce.JWTSecurity;
+package com.prem.ecommerce.JWTSecurity.request;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class LoginRequest {
 
 
+    @NotBlank
     private String userName;
+
+    @NotBlank
     private String password;
     
     public String getUserName() {

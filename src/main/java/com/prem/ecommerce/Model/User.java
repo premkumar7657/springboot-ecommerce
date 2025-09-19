@@ -82,7 +82,7 @@ public class User {
         @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
         @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
         @ToString.Exclude
-        private Set<User> roles = new HashSet<>();
+        private Set<Roles> roles = new HashSet<>();
 
 
 
