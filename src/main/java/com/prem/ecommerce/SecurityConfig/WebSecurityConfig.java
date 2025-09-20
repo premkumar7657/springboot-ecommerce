@@ -31,7 +31,7 @@ import com.prem.ecommerce.Repository.UserRepository;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class webSecurityConfig {
+public class WebSecurityConfig {
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
@@ -39,11 +39,8 @@ public class webSecurityConfig {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
-
-
     @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter()
-    {
+    AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
     }
 
@@ -53,62 +50,60 @@ public class webSecurityConfig {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider()
-    {
+    DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
-        
+
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception
-    {
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
-    {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll()
-                                            .requestMatchers("v3/api-docs/**").permitAll()
-                                            .requestMatchers("/swagger-ui/**").permitAll()
-                                            .requestMatchers("/api/public/**").permitAll()
-                                            .requestMatchers("/api/test/**").permitAll()
-                                            .requestMatchers("/api/admin/**").permitAll()
-                                            .requestMatchers("/images/**").permitAll()
-                                            .requestMatchers("/h2-console/**").permitAll()
-                                            .anyRequest().authenticated());
+                .requestMatchers("v3/api-docs/**").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/api/test/**").permitAll()
+                .requestMatchers("/api/admin/**").permitAll()
+                .requestMatchers("/images/**").permitAll()
+                .requestMatchers("/h2-console/**").permitAll()
+                .anyRequest().authenticated());
 
         http.csrf(csrf -> csrf.disable())
-            .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-            http.authenticationProvider(authenticationProvider());
-            
+        http.authenticationProvider(authenticationProvider());
 
-       // http.sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); 
+        // http.sessionManagement(session
+        // ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin())); // Allow frames from the same origin (for H2 console)
+        http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin())); // Allow frames from
+                                                                                                  // the same origin
+                                                                                                  // (for H2 console)
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        
+
         return http.build();
-        
+
     }
 
     @Bean
     WebSecurityCustomizer webSecurityCustomizer()
     {
-        return (web ->  web.ignoring()
-        .requestMatchers("v2/api-docs/**","/configuration/ui","/swagger-resources/**","/configuration/security","/swagger-ui.html","/webjars/**"));
+    return (web -> web.ignoring()
+    .requestMatchers("v2/api-docs/**","/configuration/ui","/swagger-resources/**","/configuration/security","/swagger-ui.html","/webjars/**"));
     }
 
-
-
     @Bean
-    public CommandLineRunner initData(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    CommandLineRunner initData(RoleRepository roleRepository, UserRepository userRepository,
+            PasswordEncoder passwordEncoder) {
         return args -> {
             // Retrieve or create roles
             Roles userRole = roleRepository.findByRoleName(AppRole.ROLE_USER)
@@ -133,20 +128,19 @@ public class webSecurityConfig {
             Set<Roles> sellerRoles = Set.of(sellerRole);
             Set<Roles> adminRoles = Set.of(userRole, sellerRole, adminRole);
 
-
             // Create users if not already present
             if (!userRepository.existsByUserName("user1")) {
-                User user1 = new User("user1", "user1@example.com", passwordEncoder.encode("password1"));
+                User user1 = new User("user1", passwordEncoder.encode("password1"),"user1@example.com");
                 userRepository.save(user1);
             }
 
             if (!userRepository.existsByUserName("seller1")) {
-                User seller1 = new User("seller1", "seller1@example.com", passwordEncoder.encode("password2"));
+                User seller1 = new User("seller1", passwordEncoder.encode("password2"), "seller1@example.com");
                 userRepository.save(seller1);
             }
 
             if (!userRepository.existsByUserName("admin")) {
-                User admin = new User("admin", "admin@example.com", passwordEncoder.encode("adminPass"));
+                User admin = new User("admin", passwordEncoder.encode("adminPass"), "admin@example.com");
                 userRepository.save(admin);
             }
 
@@ -169,4 +163,3 @@ public class webSecurityConfig {
     }
 
 }
-

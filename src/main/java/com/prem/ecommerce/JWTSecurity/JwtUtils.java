@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Component
 public class JwtUtils {
 
-     private static final  Logger logger = LoggerFactory.getLogger("Jwtutils.class");
+     private static final  Logger logger = LoggerFactory.getLogger("JwtUtils.class");
 
      @Value("${spring.app.jwtSecret}")
      private String jwtSecretToken;
@@ -49,13 +49,14 @@ public class JwtUtils {
 
 
     public String getJwtFromHeader(HttpServletRequest request) {
-        String bearerToken = request.getHeader("authorization");
-        logger.debug("AuthTokenFilter : {} ",bearerToken);
+        String bearerToken = request.getHeader("Authorization");
+        logger.debug("Authorization Header: {} ",bearerToken);
 
-        if(bearerToken!=null && (bearerToken.startsWith("Bearer ")
+        if(bearerToken!=null && bearerToken.startsWith("Bearer "))
         {
             return bearerToken.substring(7);
         }
+        
         return null;
         
     }

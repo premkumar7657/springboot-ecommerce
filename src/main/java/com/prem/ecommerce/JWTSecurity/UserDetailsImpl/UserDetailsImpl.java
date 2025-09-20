@@ -2,7 +2,6 @@ package com.prem.ecommerce.JWTSecurity.UserDetailsImpl;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -58,7 +57,7 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> grantedAuthorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getUserName()))
+                .map(role -> new SimpleGrantedAuthority(role.getRoleName().name()))
                 .collect(Collectors.toList());
 
         return new UserDetailsImpl(user.getUserid(), user.getUserName(), user.getPassword(), user.getEmail(),
